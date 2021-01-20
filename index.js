@@ -24,11 +24,14 @@ connection.connect((err) => {
 });
 
 function init() {
+    // Clear screen before prompting user
     clear();
 
-    //console.log("Working so far...");
+    // Declare welcome message
+    const welcomeMsg = "Employee Manager 9000";
 
-    figlet('Hello World!!', function (err, data) {
+    // Display welcome message in 'Ascii Art'
+    figlet(welcomeMsg, function (err, data) {
         if (err) {
             console.log('Something went wrong...');
             console.dir(err);
