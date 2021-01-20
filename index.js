@@ -1,6 +1,7 @@
 const mysql = require("mysql");
 const inquirer = require("inquirer");
 const clear = require("clear");
+const figlet = require("figlet");
 
 const connection = mysql.createConnection({
     host: "localhost",
@@ -25,7 +26,16 @@ connection.connect((err) => {
 function init() {
     clear();
 
-    console.log("Working so far...");
+    //console.log("Working so far...");
+
+    figlet('Hello World!!', function (err, data) {
+        if (err) {
+            console.log('Something went wrong...');
+            console.dir(err);
+            return;
+        }
+        console.log(data)
+    });
 
 }
 
