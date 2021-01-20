@@ -77,7 +77,7 @@ function mainMenu() {
                 addSubMenu();
                 break;
             case "View":
-                // viewSubMenu();
+                viewSubMenu();
                 break;
             case "Update Roles":
                 // updateSubMenu();
@@ -125,6 +125,42 @@ function addSubMenu() {
     });
 
 }
+
+function viewSubMenu() {
+    // Clear screen before prompting user
+    clear();
+
+    // Display sub-level Add menu
+    inquirer.prompt(
+        [
+            {
+                type: "list",
+                message: "VIEW | Make a Selection:",
+                choices: ["Departments", "Employees by Last Name", "EXTRA: Employees By Manager", "Roles", "Go to Main Menu"],
+                name: "menuAction"
+            }
+        ]
+    ).then(({ menuAction }) => {
+        switch (menuAction) {
+            case "Departments":
+                // view departments
+                break;
+            case "Employees By Last Name":
+                // view employees by last name
+                break;
+            case "EXTRA: Employees By Manager":
+                // view employees by manager
+                break;
+            case "Roles":
+                // view roles
+                break;
+            default:
+                mainMenu();
+        }
+    });
+
+}
+
 
 function exit() {
     connection.end();
