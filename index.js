@@ -66,7 +66,7 @@ function mainMenu() {
         [
             {
                 type: "list",
-                message: "Make a Selection:",
+                message: "MAIN MENU | Make a Selection:",
                 choices: ["Add", "View", "Update Roles", "EXTRA: Delete", "EXTRA: View Department Budget Utilization", "Exit"],
                 name: "menuAction"
             }
@@ -103,23 +103,27 @@ function addSubMenu() {
         [
             {
                 type: "list",
-                message: "Make a Selection:",
-                choices: ["Add Department", "Add Employee", "Add Role", "Go to Main Menu"],
+                message: "ADD | Make a Selection:",
+                choices: ["Department", "Employee", "Role", "Go to Main Menu"],
                 name: "menuAction"
             }
         ]
     ).then(({ menuAction }) => {
         switch (menuAction) {
-            case "Add Department":
+            case "Department":
                 // create department
                 break;
-            case "Add Employee":
+            case "Employee":
                 // create employee
                 break;
-            case "Add Role":
+            case "Role":
                 // create role
                 break;
             default:
+                // Clear screen before prompting user
+                clear();
+
+                // Return user to main menu
                 mainMenu();
         }
     });
@@ -155,6 +159,10 @@ function viewSubMenu() {
                 // view roles
                 break;
             default:
+                // Clear screen before prompting user
+                clear();
+
+                // Return user to main menu
                 mainMenu();
         }
     });
