@@ -2,6 +2,7 @@
 const inquirer = require("inquirer");
 const clear = require("clear");
 const mysql = require("mysql");
+const table = require("console.table");
 
 module.exports = {
     mainMenu: function () {
@@ -147,27 +148,30 @@ module.exports = {
         // Make connection to database
         const c = this.makeConnection();
 
-        const queryString = `SELECT employees.id, employees.first_name, employees.last_name, employees.role_id, employees.manager_id, roles.id, roles.title FROM employees, roles WHERE manager_id != 'NULL' ORDER BY last_name;`;
+        const queryString = `SELECT * FROM employees, roles WHERE manager_id != 'NULL';`;
 
         c.query(queryString, (err, data) => {
             if (err) throw err;
 
+            console.table(data);
+            console.log("Data length: " + data.length);
             let tempArray1 = [];
             let currentRoles = [];
             let currentManagers = [];
             let managerNames = [];
 
-            //console.log(data);
+            for (let i = 0; i < data.length; i++) {
+                if (data[i].id === 1) {
+                    currentManagers.push(
+                        {
+                            empId: i,
+                            firstName: data[i].first_name,
+                            lastName: data[i].last_name
+                        }
+                    )
 
-            for (let i = 0; i < data.length; i += 5) {
-                currentManagers.push(
-                    {
-                        empId: i,
-                        firstName: data[i].first_name,
-                        lastName: data[i].last_name
-                    }
-                )
-                if (i % 5 == 0) {
+                }
+                if (data[i].role_id === 1) {
                     currentRoles.push(
                         {
                             roleId: i,
@@ -215,8 +219,7 @@ module.exports = {
                     return currentManagers.id;
                 });
 
-                const queryString = `INSERT INTO employees (first_name, last_name, role_id, manager_id)
-               VALUES (?, ?, ?, ?);`;
+                const queryString = `INSERT INTO employees (first_name, last_name, role_id, manager_id) VALUES (?, ?, ?, ?);`;
 
                 // c.query(queryString, [fName, lName, ROLE_ID, mgrId], (err, data) => {
                 //     if (err) throw err;
@@ -402,6 +405,7 @@ module.exports = {
 
             // Display query results
             console.table(data);
+            table
 
             inquirer.prompt(
                 [
