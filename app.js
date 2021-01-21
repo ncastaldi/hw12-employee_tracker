@@ -140,7 +140,6 @@ module.exports = {
                 } else {
                     console.log("Update Failed.");
                 }
-
             })
         })
     },
@@ -303,7 +302,7 @@ module.exports = {
                     viewMenu.viewDepartmentList();
                     break;
                 case "Employees by Last Name":
-                    return viewMenu.viewByLastName();
+                    this.viewByLastName();
                     break;
                 case "EXTRA: Employees By Manager":
                     // view employees by manager
@@ -318,9 +317,44 @@ module.exports = {
                     // Return user to main menu
                     this.mainMenu();
             }
-        }).then(() => {
-            this.mainMenu();
         })
+    },
+    viewByLastName: function () {
+        console.log("HERE in the function");
+
+        // Make connection to database
+        const c = this.makeConnection();
+
+        // Define query string
+        queryString = `SELECT * FROM employees ORDER BY last_name;`;
+
+        // Make query
+        c.query(queryString, (err, data) => {
+            if (err) throw err;
+
+            // Display query results
+            console.table(data);
+
+            inquirer.prompt(
+                [
+                    {
+                        type: "list",
+                        message: "Please make a selection:",
+                        choices: ["Return to VIEW Menu", "Return to MAIN Menu"],
+                        name: "menuSelection"
+                    }
+                ]
+            ).then(({ menuSelection }) => {
+                switch (menuSelection) {
+                    case "Return to VIEW Menu":
+                        this.viewSubMenu();
+                        break;
+                    case "Return to MAIN Menu":
+                        this.mainMenu();
+                        break;
+                }
+            })
+        });
     },
     updateSubMenu: function () {
         // Clear screen before prompting user
