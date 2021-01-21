@@ -21,7 +21,7 @@ const connection = mysql.createConnection({
     password: "Procmi*1",
 
     // Declare database name
-    database: "employeeDB",
+    database: "employeesDB",
 });
 
 // Make connection to database
@@ -33,13 +33,13 @@ connection.connect((err) => {
     console.log(`connected as id: ${connection.threadId}`);
 
     // Initialize app
-    init();
+    init(connection);
 });
 
 // Function to welcome user into app
-function init() {
+function init(connection) {
     // Clear screen before prompting user
-    clear();
+    //clear();
 
     // Declare welcome message
     const welcomeMsg = "Employee Manager 9000";
@@ -56,5 +56,5 @@ function init() {
     // });
 
     // Call main menu function
-    menuSystem.mainMenu();
+    menuSystem.mainMenu(connection);
 }
