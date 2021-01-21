@@ -1,6 +1,5 @@
 // Include npm dependencies
 const mysql = require("mysql");
-const inquirer = require("inquirer");
 const clear = require("clear");
 const figlet = require("figlet");
 
