@@ -4,7 +4,7 @@ const clear = require("clear");
 const figlet = require("figlet");
 
 // Include local classes
-const menuSystem = require("./lib/menuSystem.js");
+const menuSystem = require("./app.js");
 
 // Create connection to database
 const connection = mysql.createConnection({
@@ -57,5 +57,4 @@ function init() {
 
     // Call main menu function
     menuSystem.mainMenu();
-
 }
