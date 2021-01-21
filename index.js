@@ -33,11 +33,11 @@ connection.connect((err) => {
     console.log(`connected as id: ${connection.threadId}`);
 
     // Initialize app
-    init(connection);
+    init();
 });
 
 // Function to welcome user into app
-function init(connection) {
+function init() {
     // Clear screen before prompting user
     //clear();
 
@@ -56,5 +56,5 @@ function init(connection) {
     // });
 
     // Call main menu function
-    menuSystem.mainMenu(connection);
+    menuSystem.mainMenu();
 }
