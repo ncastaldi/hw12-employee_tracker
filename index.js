@@ -57,4 +57,5 @@ function init() {
 
     // Call main menu function
     menuSystem.mainMenu();
+
 }
