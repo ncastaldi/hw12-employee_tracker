@@ -302,16 +302,16 @@ module.exports = {
         ).then(({ viewMenuAction }) => {
             switch (viewMenuAction) {
                 case "Departments":
-                    this.viewDepartmentList();
+                    this.viewDepartments();
                     break;
                 case "Employees by Last Name":
-                    this.viewByLastName();
+                    this.viewEmployees();
                     break;
                 case "EXTRA: Employees By Manager":
                     // view employees by manager
                     break;
                 case "Roles":
-                    this.viewRoleList();
+                    this.viewRoles();
                     break;
                 default:
                     // Clear screen before prompting user
@@ -322,7 +322,7 @@ module.exports = {
             }
         })
     },
-    viewDepartmentList: function () {
+    viewDepartments: function () {
         // Make connection to database
         const c = this.makeConnection();
 
@@ -360,7 +360,7 @@ module.exports = {
             })
         });
     },
-    viewRoleList: function () {
+    viewRoles: function () {
         // Make connection to database
         const c = this.makeConnection();
 
@@ -398,7 +398,7 @@ module.exports = {
             })
         });
     },
-    viewByLastName: function () {
+    viewEmployees: function () {
         // Make connection to database
         const c = this.makeConnection();
 
