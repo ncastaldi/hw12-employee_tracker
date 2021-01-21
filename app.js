@@ -299,7 +299,7 @@ module.exports = {
         ).then(({ viewMenuAction }) => {
             switch (viewMenuAction) {
                 case "Departments":
-                    viewMenu.viewDepartmentList();
+                    this.viewDepartmentList();
                     break;
                 case "Employees by Last Name":
                     this.viewByLastName();
@@ -308,7 +308,7 @@ module.exports = {
                     // view employees by manager
                     break;
                 case "Roles":
-                    viewMenu.viewRoleList();
+                    this.viewRoleList();
                     break;
                 default:
                     // Clear screen before prompting user
@@ -319,9 +319,77 @@ module.exports = {
             }
         })
     },
-    viewByLastName: function () {
-        console.log("HERE in the function");
+    viewDepartmentList: function () {
+        // Make connection to database
+        const c = this.makeConnection();
 
+        // Define query string
+        queryString = `SELECT name FROM departments ORDER BY name;`;
+
+        // Make query
+        c.query(queryString, (err, data) => {
+            if (err) throw err;
+
+            // Display query results
+            console.table(data);
+
+            inquirer.prompt(
+                [
+                    {
+                        type: "list",
+                        message: "Please make a selection:",
+                        choices: ["Return to VIEW Menu", "Return to MAIN Menu"],
+                        name: "menuSelection"
+                    }
+                ]
+            ).then(({ menuSelection }) => {
+                switch (menuSelection) {
+                    case "Return to VIEW Menu":
+                        this.viewSubMenu();
+                        break;
+                    case "Return to MAIN Menu":
+                        this.mainMenu();
+                        break;
+                }
+            })
+        });
+    },
+    viewRoleList: function () {
+        // Make connection to database
+        const c = this.makeConnection();
+
+        // Define query string
+        queryString = `SELECT title FROM roles ORDER BY title;`;
+
+        // Make query
+        c.query(queryString, (err, data) => {
+            if (err) throw err;
+
+            // Display query results
+            console.table(data);
+
+            inquirer.prompt(
+                [
+                    {
+                        type: "list",
+                        message: "Please make a selection:",
+                        choices: ["Return to VIEW Menu", "Return to MAIN Menu"],
+                        name: "menuSelection"
+                    }
+                ]
+            ).then(({ menuSelection }) => {
+                switch (menuSelection) {
+                    case "Return to VIEW Menu":
+                        this.viewSubMenu();
+                        break;
+                    case "Return to MAIN Menu":
+                        this.mainMenu();
+                        break;
+                }
+            })
+        });
+    },
+    viewByLastName: function () {
         // Make connection to database
         const c = this.makeConnection();
 
