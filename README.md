@@ -21,6 +21,8 @@ TBD
 
 Function abstraction: [Stackoverflow](https://stackoverflow.com/questions/5797852/in-node-js-how-do-i-include-functions-from-my-other-files)
 
+Searching an object: [Digital Ocean](https://www.digitalocean.com/community/tutorials/js-array-find-method)
+
 ## License
 
 MIT License
