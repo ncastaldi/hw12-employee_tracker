@@ -39,7 +39,7 @@ connection.connect((err) => {
 // Function to welcome user into app
 function init() {
     // Clear screen before prompting user
-    //clear();
+    clear();
 
     // Declare welcome message
     const welcomeMsg = "Employee Manager 9000";
