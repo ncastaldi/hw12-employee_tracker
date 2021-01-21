@@ -351,8 +351,11 @@ module.exports = {
                         this.viewSubMenu();
                         break;
                     case "Return to MAIN Menu":
+                        // Clear screen before prompting user
+                        clear();
+
+                        // Return user to main menu
                         this.mainMenu();
-                        break;
                 }
             })
         });
@@ -386,8 +389,11 @@ module.exports = {
                         this.viewSubMenu();
                         break;
                     case "Return to MAIN Menu":
+                        // Clear screen before prompting user
+                        clear();
+
+                        // Return user to main menu
                         this.mainMenu();
-                        break;
                 }
             })
         });
@@ -422,8 +428,11 @@ module.exports = {
                         this.viewSubMenu();
                         break;
                     case "Return to MAIN Menu":
+                        // Clear screen before prompting user
+                        clear();
+
+                        // Return user to main menu
                         this.mainMenu();
-                        break;
                 }
             })
         });
