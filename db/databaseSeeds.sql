@@ -21,18 +21,18 @@ INSERT INTO roles (title, salary, department_id)
 VALUES ("Legal Team Lead", 250000, 4);
 
 INSERT INTO employees (first_name, last_name, role_id, manager_id)
-VALUES ("John", "Doe", 1, 3);
+VALUES ("Michael", "Scott", 1, 3);
 INSERT INTO employees (first_name, last_name, role_id, manager_id)
-VALUES ("Mike", "Chan", 2, 1);
+VALUES ("Dwight", "Schrute", 2, 1);
 INSERT INTO employees (first_name, last_name, role_id, manager_id)
-VALUES ("Ashley", "Rodriguez", 3, null);
+VALUES ("Jim", "Halpert", 3, null);
 INSERT INTO employees (first_name, last_name, role_id, manager_id)
-VALUES ("Kevin", "Tupik", 4, 3);
+VALUES ("Pam", "Beesly", 4, 3);
 INSERT INTO employees (first_name, last_name, role_id, manager_id)
-VALUES ("Malia", "Brown", 5, null);
+VALUES ("Ryan", "Howard", 5, null);
 INSERT INTO employees (first_name, last_name, role_id, manager_id)
-VALUES ("Sarah", "Lourd", 2, null);
+VALUES ("Andy", "Bernard", 2, null);
 INSERT INTO employees (first_name, last_name, role_id, manager_id)
-VALUES ("Tom", "Allen", 4, 7);
+VALUES ("Robert", "California", 4, 7);
 INSERT INTO employees (first_name, last_name, role_id, manager_id)
-VALUES ("Christian", "Eckenrode", 1, 2);
+VALUES ("Jan", "Levinson", 1, 2);

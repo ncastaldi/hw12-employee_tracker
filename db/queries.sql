@@ -4,29 +4,35 @@ SELECT * FROM employees;
 SELECT * FROM roles;
 SELECT * FROM departments;
 
--- View Employee By Last Name
-SELECT last_name, first_name, role_id, manager_id FROM employees
-ORDER BY last_name;
+-- View Employees with titles and salaries - By Department, By Last Name
+SELECT departments.name AS Department, CONCAT (employees.first_name, ' ', employees.last_name) AS Employee, roles.title AS Title, roles.salary AS Salary
+FROM employees
+LEFT JOIN roles ON roles.id = employees.role_id
+LEFT JOIN departments ON departments.id = roles.department_id
+ORDER BY departments.name, employees.last_name;
 
--- View Employee By Manager
-SELECT * FROM employees
-ORDER BY manager_id;
-
--- View Departments
-SELECT name FROM departments
-ORDER BY name;
+-- View Departments with Budgets
+SELECT departments.name AS Departments, SUM(roles.salary) AS "Current Budget"
+FROM departments
+LEFT JOIN roles ON roles.department_id = departments.id
+GROUP BY departments.id;
 
 -- View Roles
-SELECT title FROM roles
-ORDER BY title;
+SELECT roles.title AS Roles, roles.salary AS Salary FROM roles
+ORDER BY roles.title;
 
--- List of managers
-SELECT id, first_name, last_name FROM employees
-WHERE manager_id != 'NULL'
-ORDER BY last_name; 
+-- View of managers
+SELECT departments.name AS Department, CONCAT (employees.first_name, ' ', employees.last_name) AS Employee, roles.title AS Title
+FROM employees
+LEFT JOIN roles ON departments.id = roles.department_id
+LEFT JOIN roles ON roles.id = employees.role_id
+WHERE employees.manager_id != 'NULL';
 
--- List of managers and roles
-SELECT employees.id, employees.first_name, employees.last_name, employees.role_id, employees.manager_id, roles.id, roles.title
-FROM employees, roles
-WHERE manager_id != 'NULL'
-ORDER BY last_name; 
+-- Update role
+UPDATE employees
+SET role_id = 4
+WHERE employees.id = 13;
+
+-- Delete Roles
+DELETE FROM departments
+WHERE departments.id =1;
