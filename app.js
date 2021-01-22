@@ -32,7 +32,7 @@ module.exports = {
                     // deleteSubMenu();
                     break;
                 case "EXTRA: View Department Budget Utilization":
-                    // displayBudgets();
+                    this.displayBudgets();
                     break;
                 default:
                     this.exit();
@@ -358,7 +358,11 @@ module.exports = {
         const c = this.makeConnection();
 
         // Define query string
-        queryString = `SELECT employees.first_name, employees.last_name, roles.title, roles.salary FROM employees LEFT JOIN roles ON roles.id = employees.role_id ORDER BY last_name;`;
+        queryString = `SELECT departments.name AS Department, CONCAT (employees.first_name, ' ', employees.last_name) AS Employee, roles.title AS Title, roles.salary AS Salary
+                        FROM employees
+                        LEFT JOIN roles ON roles.id = employees.role_id
+                        LEFT JOIN departments ON departments.id = roles.department_id
+                        ORDER BY departments.name, employees.last_name;`;
 
         // Make query
         c.query(queryString, (err, data) => {
@@ -366,7 +370,6 @@ module.exports = {
 
             // Display query results
             console.table(data);
-            table
 
             inquirer.prompt(
                 [
@@ -498,6 +501,22 @@ module.exports = {
                 })
             });
         });
+    },
+    displayBudgets: function () {
+        // Make connection to database
+        const c = this.makeConnection();
+
+        const queryString = `SELECT name, SUM(roles.salary)
+                                FROM departments, roles;`;
+
+        c.query(queryString, (err, data) => {
+            if (err) throw err;
+
+            console.log(data.length);
+            for (let i = 0; i < data.length; i++) {
+                console.log(data[i]);
+            }
+        })
     },
     exit: function () {
         process.exit();
