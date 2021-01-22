@@ -431,47 +431,72 @@ module.exports = {
         });
     },
     updateEmployeeRole: function () {
-        // Clear screen before prompting user
-        clear();
+        // Make connection to database
+        const c = this.makeConnection();
 
-        // Display sub-level Update menu
+        const employeeQuery = `SELECT * FROM employees;`;
+        const roleQuery = `SELECT * FROM roles;`;
 
-        // Query db for list of employees
-        // Ask user to select employee from list
-        // Query db for list of role titles
-        // Ask user to select new title from list
+        c.query(employeeQuery, (err, data) => {
+            if (err) throw err;
+            const employeeList = data.map((employee) => {
+                return {
+                    name: `${employee.first_name} ${employee.last_name}`,
+                    value: employee.id,
+                };
+            });
+            c.query(roleQuery, (err, data) => {
+                if (err) throw err;
+                const currentRoles = data.map((role) => {
+                    return { name: role.title, value: role.id };
+                });
 
+                inquirer.prompt(
+                    [
+                        {
+                            type: "list",
+                            message: "Select employee to modify: ",
+                            choices: employeeList,
+                            name: "employeeList"
+                        },
+                        {
+                            type: "list",
+                            message: "Select employee's *NEW* title: ",
+                            choices: currentRoles,
+                            name: "newRole"
+                        },
+                    ]
+                ).then(({ employeeList, newRole }) => {
+                    console.log(`Employee: ${employeeList} - New Role: ${newRole}`);
 
-        inquirer.prompt(
-            [
-                {
-                    type: "list",
-                    message: "UPDATE MENU | Make a Selection:",
-                    choices: ["Departments", "Employees by Last Name", "EXTRA: Employees By Manager", "Roles", "Go to Main Menu"],
-                    name: "menuAction"
-                }
-            ]
-        ).then(({ menuAction }) => {
-            switch (menuAction) {
-                case "Departments":
-                    // view departments
-                    break;
-                case "Employees By Last Name":
-                    // view employees by last name
-                    break;
-                case "EXTRA: Employees By Manager":
-                    // view employees by manager
-                    break;
-                case "Roles":
-                    // view roles
-                    break;
-                default:
-                    // Clear screen before prompting user
-                    clear();
+                    const updateString = `UPDATE employees SET role_id = ? WHERE employees.id = ?;`;
 
-                    // Return user to main menu
-                    this.mainMenu();
-            }
+                    c.query(updateString, [newRole, employeeList], (err, data) => {
+                        if (err) throw err;
+
+                        if (data.affectedRows > 0) {
+                            console.log("New Employee Added Successfully!");
+                        } else {
+                            console.log("ACTION FAILED");
+                        }
+
+                        c.end();
+
+                        inquirer.prompt(
+                            [
+                                {
+                                    type: "list",
+                                    choices: ["Add another employee", "Return to ADD Menu", "Return to MAIN Menu"],
+                                    name: "menuAction"
+                                }
+                            ]
+                        ).then((({ menuAction }) => {
+
+                            console.log(menuAction);
+                        }));
+                    });
+                })
+            });
         });
     },
     exit: function () {
