@@ -11,13 +11,15 @@ function init() {
     clear();
 
     // Display Welcome Message
-    console.log(figlet.textSync('Employee\nManager', {
+    console.log(figlet.textSync('Employee\n    Manager', {
         font: 'banner',
         horizontalLayout: 'controlled smushing',
         verticalLayout: 'default',
         width: 80,
         whitespaceBreak: true
     }));
+
+    //console.log("From the menu below, please choose an action\n")
 
     // Call main menu function
     menuSystem.mainMenu();
