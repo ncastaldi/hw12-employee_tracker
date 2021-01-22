@@ -23,7 +23,7 @@ For this assignment, we were asked to architect and build a solution for managin
 
 - App Walkthrough Video: [![App Walkthrough Video](./assets/images/app-screenshot.png)](https://drive.google.com/file/d/1QnFtnlA5PVk5FgKKSuJhTc2h5eLbboL7/view?usp=sharing)
 
-- GitHub Repository: [https://github.com/ncastaldi/hw10-profile_generator](https://github.com/ncastaldi/hw10-profile_generator)
+- GitHub Repository: [https://github.com/ncastaldi/hw12-employee_tracker](https://github.com/ncastaldi/hw12-employee_tracker)
 
 ![./assets/images/repo-screenshot.png](./assets/images/repo-screenshot.png)
 
