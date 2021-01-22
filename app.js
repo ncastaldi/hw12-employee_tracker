@@ -148,87 +148,64 @@ module.exports = {
         // Make connection to database
         const c = this.makeConnection();
 
-        const queryString = `SELECT * FROM employees, roles WHERE manager_id != 'NULL';`;
+        const employeeQuery = `SELECT * FROM employees;`;
+        const roleQuery = `SELECT * FROM roles;`;
 
-        c.query(queryString, (err, data) => {
+        c.query(employeeQuery, (err, data) => {
             if (err) throw err;
-
-            console.table(data);
-            console.log("Data length: " + data.length);
-            let tempArray1 = [];
-            let currentRoles = [];
-            let currentManagers = [];
-            let managerNames = [];
-
-            for (let i = 0; i < data.length; i++) {
-                if (data[i].id === 1) {
-                    currentManagers.push(
-                        {
-                            empId: i,
-                            firstName: data[i].first_name,
-                            lastName: data[i].last_name
-                        }
-                    )
-
-                }
-                if (data[i].role_id === 1) {
-                    currentRoles.push(
-                        {
-                            roleId: i,
-                            roleTitle: data[i].title
-                        }
-                    )
-                }
-            }
-
-            // for (let i = 0; i < currentManagers; i++) {
-            //     console.log(currentManagers[i].empId);
-            //     currentRoles[i].roleId.valueOf = i;
-            // }
-
-            console.log(currentManagers);
-            console.log(currentRoles);
-
-            // for (let i = 0; i < data.length; i++) {
-            //     managerNames.push(data[i].first_name + " " + data[i].last_name);
-            // }
-
-            inquirer.prompt(
-                [
-                    {
-                        type: "input",
-                        message: "Enter employee's first name: ",
-                        name: "fName"
-                    },
-                    {
-                        type: "input",
-                        message: "Enter employee's last name: ",
-                        name: "lName"
-                    },
-                    {
-                        type: "list",
-                        message: "Select employee's manager: ",
-                        choices: managerNames,
-                        name: "newManager"
-                    },
-                ]
-            ).then(({ fName, lName, newManager }) => {
-                console.log(`Employee: ${fName} ${lName} - Manager: ${newManager}`);
-
-                const mgrId = currentManagers.find(function (currentManagers) {
-                    return currentManagers.id;
+            const currentManagers = data.map((employee) => {
+                return {
+                    name: `${employee.first_name} ${employee.last_name}`,
+                    value: employee.id,
+                };
+            });
+            c.query(roleQuery, (err, data) => {
+                if (err) throw err;
+                const currentRoles = data.map((role) => {
+                    return { name: role.title, value: role.id };
                 });
 
-                const queryString = `INSERT INTO employees (first_name, last_name, role_id, manager_id) VALUES (?, ?, ?, ?);`;
+                console.log(currentManagers);
+                console.log(currentRoles);
 
-                // c.query(queryString, [fName, lName, ROLE_ID, mgrId], (err, data) => {
-                //     if (err) throw err;
+                inquirer.prompt(
+                    [
+                        {
+                            type: "input",
+                            message: "Enter employee's first name: ",
+                            name: "fName"
+                        },
+                        {
+                            type: "input",
+                            message: "Enter employee's last name: ",
+                            name: "lName"
+                        },
+                        {
+                            type: "list",
+                            message: "Select employee's manager: ",
+                            choices: currentManagers,
+                            name: "newManager"
+                        },
+                        {
+                            type: "list",
+                            message: "Select employee's title: ",
+                            choices: currentRoles,
+                            name: "newRole"
+                        },
+                    ]
+                ).then(({ fName, lName, newManager, newRole }) => {
+                    console.log(`Employee: ${fName} ${lName} - Role: ${newRole} - Manager: ${newManager}`);
 
-                //     console.log(data);
-                // });
-            })
-        })
+                    const updateString = `INSERT INTO employees (first_name, last_name, role_id, manager_id) VALUES (?, ?, ?, ?);`;
 
+                    c.query(updateString, [fName, lName, newRole, newManager], (err, data) => {
+                        if (err) throw err;
+
+                        console.log(data);
+                    });
+                })
+            });
+        });
     },
     addRole: function () {
         inquirer.prompt(
