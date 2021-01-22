@@ -1,6 +1,4 @@
-# hw12-employee_tracker
-
-Assignment: Employee Tracker
+# Assignment: Employee Tracker
 
 ## Description
 
@@ -8,20 +6,26 @@ For this assignment, we were asked to architect and build a solution for managin
 
 ## Table of Contents
 
+- [Installation](#installation)
 - [Usage](#usage)
-- [Credits](#credits)
 - [License](#license)
 - [Badges](#badges)
 
+## Installation
+
+- Clone the repo to your local machine.
+
+- Run `npm install` command from a Bash command line to install dependencies.
+
 ## Usage
 
-TBD
+- Run `npm start` command from a Bash command line to start app.
 
-## Credits
+- App Walkthrough Video: [![App Walkthrough Video](./assets/images/app-screenshot.png)](https://drive.google.com/file/d/1QnFtnlA5PVk5FgKKSuJhTc2h5eLbboL7/view?usp=sharing)
 
-Function abstraction: [Stackoverflow](https://stackoverflow.com/questions/5797852/in-node-js-how-do-i-include-functions-from-my-other-files)
+- GitHub Repository: [https://github.com/ncastaldi/hw10-profile_generator](https://github.com/ncastaldi/hw10-profile_generator)
 
-Searching an object: [Digital Ocean](https://www.digitalocean.com/community/tutorials/js-array-find-method)
+![./assets/images/repo-screenshot.png](./assets/images/repo-screenshot.png)
 
 ## License
 
