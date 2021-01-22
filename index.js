@@ -2,7 +2,7 @@
 const clear = require("clear");
 
 // Include local classes
-const menuSystem = require("./app.js");
+const menuSystem = require("./lib/app.js");
 
 // Function to welcome user into app
 function init() {
