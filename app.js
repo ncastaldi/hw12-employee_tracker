@@ -165,9 +165,6 @@ module.exports = {
                     return { name: role.title, value: role.id };
                 });
 
-                console.log(currentManagers);
-                console.log(currentRoles);
-
                 inquirer.prompt(
                     [
                         {
