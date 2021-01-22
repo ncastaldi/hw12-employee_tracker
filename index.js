@@ -1,7 +1,6 @@
 // Include npm dependencies
 const mysql = require("mysql");
 const clear = require("clear");
-const figlet = require("figlet");
 
 // Include local classes
 const menuSystem = require("./app.js");
@@ -40,20 +39,6 @@ connection.connect((err) => {
 function init() {
     // Clear screen before prompting user
     clear();
-
-    // Declare welcome message
-    const welcomeMsg = "Employee Manager 9000";
-
-    // Display welcome message in 'Ascii Art'
-    // figlet(welcomeMsg, function (err, data) {
-    //     // Throw error if an error occurs
-    //     if (err) {
-    //         console.log('Something went wrong...');
-    //         console.dir(err);
-    //         return;
-    //     }
-    //     console.log(data)
-    // });
 
     // Call main menu function
     menuSystem.mainMenu();

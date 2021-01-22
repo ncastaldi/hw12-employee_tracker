@@ -13,7 +13,7 @@ module.exports = {
                 {
                     type: "list",
                     message: "MAIN MENU | Make a Selection:",
-                    choices: ["Add", "View", "Update Roles", "EXTRA: Delete", "EXTRA: View Department Budget Utilization", "Exit"],
+                    choices: ["Add", "View", "Update Roles", "EXTRA: Delete", "View Department Budget Utilization", "Exit"],
                     name: "mainMenuAction"
                 }
             ]
@@ -31,7 +31,7 @@ module.exports = {
                 case "EXTRA: Delete":
                     // deleteSubMenu();
                     break;
-                case "EXTRA: View Department Budget Utilization":
+                case "View Department Budget Utilization":
                     this.displayBudgets();
                     break;
                 default:
