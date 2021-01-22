@@ -19,8 +19,6 @@ function init() {
         whitespaceBreak: true
     }));
 
-    //console.log("From the menu below, please choose an action\n")
-
     // Call main menu function
     menuSystem.mainMenu();
 }
