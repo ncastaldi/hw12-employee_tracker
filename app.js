@@ -320,7 +320,7 @@ module.exports = {
         const c = this.makeConnection();
 
         // Define query string
-        queryString = `SELECT name FROM departments ORDER BY name;`;
+        queryString = `SELECT name AS Departments FROM departments ORDER BY name;`;
 
         // Make query
         c.query(queryString, (err, data) => {
