@@ -470,15 +470,13 @@ module.exports = {
                         },
                     ]
                 ).then(({ employeeList, newRole }) => {
-                    console.log(`Employee: ${employeeList} - New Role: ${newRole}`);
-
                     const updateString = `UPDATE employees SET role_id = ? WHERE employees.id = ?;`;
 
                     c.query(updateString, [newRole, employeeList], (err, data) => {
                         if (err) throw err;
 
                         if (data.affectedRows > 0) {
-                            console.log("New Employee Added Successfully!");
+                            console.log("New Employee Updated Successfully!\n");
                         } else {
                             console.log("ACTION FAILED");
                         }
@@ -489,13 +487,20 @@ module.exports = {
                             [
                                 {
                                     type: "list",
-                                    choices: ["Add another employee", "Return to ADD Menu", "Return to MAIN Menu"],
+                                    choices: ["Update another employee", "Return to MAIN Menu"],
                                     name: "menuAction"
                                 }
                             ]
                         ).then((({ menuAction }) => {
-
-                            console.log(menuAction);
+                            switch (menuAction) {
+                                case "Update another Employee":
+                                    clear();
+                                    this.updateEmployeeRole();
+                                    break;
+                                case "Return to MAIN Menu":
+                                    clear();
+                                    this.mainMenu();
+                            }
                         }));
                     });
                 })
@@ -506,16 +511,15 @@ module.exports = {
         // Make connection to database
         const c = this.makeConnection();
 
-        const queryString = `SELECT name, SUM(roles.salary)
-                                FROM departments, roles;`;
+        const queryString = `SELECT departments.name AS Departments, SUM(roles.salary) AS "Current Budget"
+                                FROM departments
+                                LEFT JOIN roles ON roles.department_id = departments.id
+                                GROUP BY departments.id;`;
 
         c.query(queryString, (err, data) => {
             if (err) throw err;
 
-            console.log(data.length);
-            for (let i = 0; i < data.length; i++) {
-                console.log(data[i]);
-            }
+            console.table(data);
         })
     },
     exit: function () {
