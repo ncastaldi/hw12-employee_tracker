@@ -26,7 +26,7 @@ module.exports = {
                     this.viewSubMenu();
                     break;
                 case "Update Roles":
-                    this.updateSubMenu();
+                    this.updateEmployeeRole();
                     break;
                 case "EXTRA: Delete":
                     // deleteSubMenu();
@@ -295,7 +295,7 @@ module.exports = {
                 {
                     type: "list",
                     message: "VIEW MENU | Make a Selection:",
-                    choices: ["Departments", "Employees by Last Name", "EXTRA: Employees By Manager", "Roles", "Go to Main Menu"],
+                    choices: ["Departments", "Employees", "EXTRA: Employees By Manager", "Roles", "Go to Main Menu"],
                     name: "viewMenuAction"
                 }
             ]
@@ -304,7 +304,7 @@ module.exports = {
                 case "Departments":
                     this.viewDepartments();
                     break;
-                case "Employees by Last Name":
+                case "Employees":
                     this.viewEmployees();
                     break;
                 case "EXTRA: Employees By Manager":
@@ -328,44 +328,6 @@ module.exports = {
 
         // Define query string
         queryString = `SELECT name FROM departments ORDER BY name;`;
-
-        // Make query
-        c.query(queryString, (err, data) => {
-            if (err) throw err;
-
-            // Display query results
-            console.table(data);
-
-            inquirer.prompt(
-                [
-                    {
-                        type: "list",
-                        message: "Please make a selection:",
-                        choices: ["Return to VIEW Menu", "Return to MAIN Menu"],
-                        name: "menuSelection"
-                    }
-                ]
-            ).then(({ menuSelection }) => {
-                switch (menuSelection) {
-                    case "Return to VIEW Menu":
-                        this.viewSubMenu();
-                        break;
-                    case "Return to MAIN Menu":
-                        // Clear screen before prompting user
-                        clear();
-
-                        // Return user to main menu
-                        this.mainMenu();
-                }
-            })
-        });
-    },
-    viewRoles: function () {
-        // Make connection to database
-        const c = this.makeConnection();
-
-        // Define query string
-        queryString = `SELECT title FROM roles ORDER BY title;`;
 
         // Make query
         c.query(queryString, (err, data) => {
@@ -437,7 +399,45 @@ module.exports = {
             })
         });
     },
-    updateSubMenu: function () {
+    viewRoles: function () {
+        // Make connection to database
+        const c = this.makeConnection();
+
+        // Define query string
+        queryString = `SELECT title FROM roles ORDER BY title;`;
+
+        // Make query
+        c.query(queryString, (err, data) => {
+            if (err) throw err;
+
+            // Display query results
+            console.table(data);
+
+            inquirer.prompt(
+                [
+                    {
+                        type: "list",
+                        message: "Please make a selection:",
+                        choices: ["Return to VIEW Menu", "Return to MAIN Menu"],
+                        name: "menuSelection"
+                    }
+                ]
+            ).then(({ menuSelection }) => {
+                switch (menuSelection) {
+                    case "Return to VIEW Menu":
+                        this.viewSubMenu();
+                        break;
+                    case "Return to MAIN Menu":
+                        // Clear screen before prompting user
+                        clear();
+
+                        // Return user to main menu
+                        this.mainMenu();
+                }
+            })
+        });
+    },
+    updateEmployeeRole: function () {
         // Clear screen before prompting user
         clear();
 
