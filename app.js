@@ -13,7 +13,7 @@ module.exports = {
                 {
                     type: "list",
                     message: "MAIN MENU | Make a Selection:",
-                    choices: ["Add", "View", "Update Roles", "EXTRA: Delete", "View Department Budget Utilization", "Exit"],
+                    choices: ["Add", "EXTRA: Delete", "View", "Update Roles", "Exit"],
                     name: "mainMenuAction"
                 }
             ]
@@ -22,17 +22,14 @@ module.exports = {
                 case "Add":
                     this.addSubMenu();
                     break;
+                case "EXTRA: Delete":
+                    // deleteSubMenu();
+                    break;
                 case "View":
                     this.viewSubMenu();
                     break;
                 case "Update Roles":
                     this.updateEmployeeRole();
-                    break;
-                case "EXTRA: Delete":
-                    // deleteSubMenu();
-                    break;
-                case "View Department Budget Utilization":
-                    this.displayBudgets();
                     break;
                 default:
                     this.exit();
@@ -288,7 +285,7 @@ module.exports = {
                 {
                     type: "list",
                     message: "VIEW MENU | Make a Selection:",
-                    choices: ["Departments", "Employees", "EXTRA: Employees By Manager", "Roles", "Go to Main Menu"],
+                    choices: ["Departments", "Department Budget Utilization", "Employees", "Roles", "Go to Main Menu"],
                     name: "viewMenuAction"
                 }
             ]
@@ -297,11 +294,11 @@ module.exports = {
                 case "Departments":
                     this.viewDepartments();
                     break;
+                case "Department Budget Utilization":
+                    this.viewDepartmentBudgets();
+                    break;
                 case "Employees":
                     this.viewEmployees();
-                    break;
-                case "EXTRA: Employees By Manager":
-                    // view employees by manager
                     break;
                 case "Roles":
                     this.viewRoles();
@@ -352,6 +349,44 @@ module.exports = {
                 }
             })
         });
+    },
+    viewDepartmentBudgets: function () {
+        // Make connection to database
+        const c = this.makeConnection();
+
+        const queryString = `SELECT departments.name AS Departments, SUM(roles.salary) AS "Current Budget"
+                                FROM departments
+                                LEFT JOIN roles ON roles.department_id = departments.id
+                                GROUP BY departments.id;`;
+
+        c.query(queryString, (err, data) => {
+            if (err) throw err;
+
+            console.table(data);
+
+            inquirer.prompt(
+                [
+                    {
+                        type: "list",
+                        message: "Please make a selection:",
+                        choices: ["Return to VIEW Menu", "Return to MAIN Menu"],
+                        name: "menuSelection"
+                    }
+                ]
+            ).then(({ menuSelection }) => {
+                switch (menuSelection) {
+                    case "Return to VIEW Menu":
+                        this.viewSubMenu();
+                        break;
+                    case "Return to MAIN Menu":
+                        // Clear screen before prompting user
+                        clear();
+
+                        // Return user to main menu
+                        this.mainMenu();
+                }
+            })
+        })
     },
     viewEmployees: function () {
         // Make connection to database
@@ -506,21 +541,6 @@ module.exports = {
                 })
             });
         });
-    },
-    displayBudgets: function () {
-        // Make connection to database
-        const c = this.makeConnection();
-
-        const queryString = `SELECT departments.name AS Departments, SUM(roles.salary) AS "Current Budget"
-                                FROM departments
-                                LEFT JOIN roles ON roles.department_id = departments.id
-                                GROUP BY departments.id;`;
-
-        c.query(queryString, (err, data) => {
-            if (err) throw err;
-
-            console.table(data);
-        })
     },
     exit: function () {
         process.exit();
