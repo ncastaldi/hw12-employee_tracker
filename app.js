@@ -201,7 +201,26 @@ module.exports = {
                     c.query(updateString, [fName, lName, newRole, newManager], (err, data) => {
                         if (err) throw err;
 
-                        console.log(data);
+                        if (data.affectedRows > 0) {
+                            console.log("New Employee Added Successfully!");
+                        } else {
+                            console.log("ACTION FAILED");
+                        }
+
+                        c.end();
+
+                        inquirer.prompt(
+                            [
+                                {
+                                    type: "list",
+                                    choices: ["Add another employee", "Return to ADD Menu", "Return to MAIN Menu"],
+                                    name: "menuAction"
+                                }
+                            ]
+                        ).then((({ menuAction }) => {
+
+                            console.log(menuAction);
+                        }));
                     });
                 })
             });
