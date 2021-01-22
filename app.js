@@ -317,7 +317,7 @@ module.exports = {
         const c = this.makeConnection();
 
         // Define query string
-        queryString = `SELECT name AS Departments FROM departments ORDER BY name;`;
+        queryString = `SELECT name AS Department FROM departments ORDER BY name;`;
 
         // Make query
         c.query(queryString, (err, data) => {
@@ -354,7 +354,7 @@ module.exports = {
         // Make connection to database
         const c = this.makeConnection();
 
-        const queryString = `SELECT departments.name AS Departments, SUM(roles.salary) AS "Current Budget"
+        const queryString = `SELECT departments.name AS Department, SUM(roles.salary) AS "Current Budget"
                                 FROM departments
                                 LEFT JOIN roles ON roles.department_id = departments.id
                                 GROUP BY departments.id;`;
@@ -435,7 +435,7 @@ module.exports = {
         const c = this.makeConnection();
 
         // Define query string
-        queryString = `SELECT title FROM roles ORDER BY title;`;
+        queryString = `SELECT title AS Role FROM roles ORDER BY title;`;
 
         // Make query
         c.query(queryString, (err, data) => {
