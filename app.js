@@ -358,7 +358,7 @@ module.exports = {
         const c = this.makeConnection();
 
         // Define query string
-        queryString = `SELECT * FROM employees ORDER BY last_name;`;
+        queryString = `SELECT employees.first_name, employees.last_name, roles.title, roles.salary FROM employees LEFT JOIN roles ON roles.id = employees.role_id ORDER BY last_name;`;
 
         // Make query
         c.query(queryString, (err, data) => {
